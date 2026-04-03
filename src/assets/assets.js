@@ -12,6 +12,7 @@ export const bgImage = '/images/background.jpg';
 export const programmationImage = '/images/image.programmation2.jpg';
 export const reactLogo = '/images/react.svg';
 export const logoImage = '/images/logolouiscar.jpeg';
+export const logoImages = '/images/logolouiscar.jpeg';
 
 export const about =
   "Expert en relations publiques doté d'une solide expertise en maintenance système, j'assure la synergie entre la performance technique de nos outils et le rayonnement de notre agence. Mon rôle : garantir que nos systèmes ne tombent jamais et que nos partenariats ne cessent de croître.";

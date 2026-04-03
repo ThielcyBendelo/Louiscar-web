@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
+import { logoImages } from '../assets/assets.js';
 
 export default function ProfessionalSplashScreen({ onComplete }) {
   const [currentStep, setCurrentStep] = useState(0);
@@ -109,8 +110,11 @@ export default function ProfessionalSplashScreen({ onComplete }) {
           exit={exitVariants.exit}
           className="fixed inset-0 z-[9999] flex items-center justify-center"
           style={{
-            background:
-              'linear-gradient(135deg, #f86008 100%, #04bff8 5%, #334155 10%, #f3f5f8 25%, #00040e 75%)',
+            background: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${logoImages}) no-repeat center center fixed`,
+            backgroundSize: '60% auto',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+           
           }}
         >
           {/* Animated Background */}
@@ -179,10 +183,7 @@ export default function ProfessionalSplashScreen({ onComplete }) {
               animate="animate"
               className="mb-8"
             >
-              <h1 className="text-4xl font-bold text-white mb-2">Louiscar Ingeba</h1>
-              <p className="text-xl text-slate-300 font-light">
-                Chargé Relations Publiques & CRP
-              </p>
+              
               <div className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-4 rounded-full"></div>
             </motion.div>
 
@@ -244,9 +245,9 @@ export default function ProfessionalSplashScreen({ onComplete }) {
               className="flex justify-center space-x-8 text-slate-400"
             >
               {[
-                { icon: '', label: 'Négociation'},
-                { icon: '', label: 'Communication' },
-                { icon: '', label: 'Gestion projet' },
+                { icon: '', label: ''},
+                { icon: '', label: '' },
+                { icon: '', label: '' },
               ].map((feature, index) => (
                 <motion.div
                   key={index}

@@ -211,8 +211,8 @@ export default function NavbarSecured() {
               }}
             >
               
-              <span className="text-4xl font-bold mb-2 bg-gradient-to-r from-red-500 to-red-300 to-red-200 text-transparent bg-clip-text">
-                Louiscar.CRP
+              <span className="text-3xl font-bold mb-2 bg-gradient-to-r from-red-500 to-red-300 to-red-200 text-transparent bg-clip-text">
+                Mon Portfolio
               </span>
             </div>
             {/* Desktop Navigation avec sous-menus */}
