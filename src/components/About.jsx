@@ -54,13 +54,7 @@ export default function About() {
         viewport={{ once: true, amount: 0.0 }}
         variants={containerVariants}
       >
-        {/* Background image */}
-        <div
-          className="absolute inset-0 w-full h-full"
-          style={{
-            backgroundColor: 'rgba(14, 1, 1, 0.99)',
-          }}
-        />
+      
 
         {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
@@ -86,18 +80,18 @@ export default function About() {
             className="text-3xl md:text-4xl font-bold text-center mb-6"
             variants={textVariants}
           >
-            <span className="text-4xl font-bold mb-3 bg-gradient-to-r from-red-500 to-red-300 to-red-200 text-transparent bg-clip-text">
+            <span className="text-4xl md:text-4xl font-extrabold mt-12 bg-gradient-to-r from-red-700 to-red-300 to-red-200">
               À propos de moi
             </span>
           </motion.h2>
           <motion.p
-            className="text-lg text-gray-300 text-center leading-relaxed max-w-4xl mb-6"
+            className="text-lg text-gray-400 text-center leading-relaxed max-w-4xl mb-6"
             variants={textVariants}
           >
             {about}
           </motion.p>
           <motion.div
-            className="text-base md:text-lg text-gray-200 border-t border-gray-700  text-center max-w-2xl space-y-4"
+            className="text-base md:text-lg text-gray-400 border-t border-gray-300  text-center max-w-2xl space-y-4"
             variants={textVariants}
           >
             <p className='"border border-purple/40"'>

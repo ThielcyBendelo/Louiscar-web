@@ -3,12 +3,13 @@ import { projets } from '../assets/assets.js';
 
 const Projet = () => {
   return (
-    <section id="projets" className="py-20 bg-gray-50">
+    <section id="projets" 
+    className="py-20 px-4 bg-white dark:bg-black border-0 transition-colors duration-300">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">Mes Projets</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Découvrez une sélection de mes réalisations récentes
+            Découvrez une sélection de nos réalisations récentes
           </p>
         </div>
 

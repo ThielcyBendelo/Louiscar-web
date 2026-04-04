@@ -127,7 +127,7 @@ export default function Contact() {
     } catch (err) {
       console.error('EmailJS send error', err);
       // Fallback to mailto on error
-      const mailtoLink = `mailto:bendelothielcy@gmail.com?subject=Message de ${encodeURIComponent(
+      const mailtoLink = `mailto:ingebalouiscar@gmail.com?subject=Message de ${encodeURIComponent(
         formData.name
       )}&body=${encodeURIComponent(
         `Nom: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
@@ -156,14 +156,15 @@ export default function Contact() {
   };
 
   return (
-    <section ref={elementRef} id="contact" className="py-20 px-4 bg-dark-200">
+    <section ref={elementRef} id="contact" 
+    className="py-20 px-4 bg-white dark:bg-black border-0 transition-colors duration-300">
       <div
         className={`max-w-4xl mx-auto transition-all duration-1000 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`}
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-          <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mt-12 mb-12 bg-gradient-to-r from-red-700 to-red-500 to-red-300">
+          <span className="bg-gradient-to-r text-white">
             Contact
           </span>
         </h2>

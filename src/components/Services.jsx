@@ -46,17 +46,17 @@ function Services() {
   };
 
   return (
-    <section className="py-10 px-4 bg-gradient-to-b from-back-400 via-black to-blue-50" id="services">
+    <section className="py-10 px-4 bg-gradient-to-b from-back-400 via-black to-black-500" id="services">
       <div className="max-w-6xl mx-auto">
         <div className="mb-4 text-center">
-          <h2 className="text-4xl font-bold mt-12 bg-gradient-to-r from-red-500 to-red-300 to-red-200 text-transparent bg-clip-text">Mes Services</h2>
+          <h2 className="text-3xl md:text-4xl font-extrabold mt-12 bg-gradient-to-r from-red-500 to-red-300 to-red-200">Mes Services</h2>
           <p className="text-lg text-gray-400 font-medium max-w-2xl mx-auto mb-6">Allier la rigueur technique de la maintenance système à la finesse des relations publiques. Je propose des solutions globales pour garantir la haute disponibilité de vos infrastructures tout en optimisant l'image de marque et l'engagement de vos partenaires</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10">
           {services.map((service, idx) => (
             <div
               key={idx}
-              className="bg-gradient-to-br from-black via-gray-50 to-blue-100 rounded-3xl shadow-2xl p-8 flex flex-col items-center text-center border border-blue-100 transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 hover:bg-blue-50 group"
+              className="bg-gradient-to-br from-white via-white-500 to-white-400 rounded-3xl shadow-2xl p-8 flex flex-col items-center text-center border border-blue-100 transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 hover:bg-blue-50 group"
               style={{ animation: `fadeInUp 0.7s cubic-bezier(.39,.575,.565,1) ${idx * 0.15}s both` }}
             >
               <div className="text-6xl mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">{service.icon}</div>

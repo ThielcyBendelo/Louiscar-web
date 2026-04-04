@@ -3,13 +3,13 @@ import { projets } from '../assets/assets.js';
 
 export default function ProjetSimple() {
   return (
-    <section id="projects" className="py-20 px-4 bg-dark-200 mt-24">
+    <section id="projects" className="py-20 px-4 py-20 px-4 bg-white dark:bg-black border-0 transition-colors duration-300">
       <div className="container mx-auto max-w-6xl">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-16 text-white">
-          Mes Projets
+        <h2 className="text-4xl md:text-4xl font-extrabold text-center mt-12 text-red-700 to-red-500 to-red-300">
+          Nos Projets
         </h2>
-        <p className="text-lg md:text-xl text-center mb-12 text-gray-300 max-w-2xl mx-auto">
-          Découvrez une sélection de mes réalisations récentes
+        <p className="text-lg text-gray-600 font-medium max-w-2xl mx-auto mb-5 text-center">
+          Découvrez une sélection de nos réalisations récentes
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

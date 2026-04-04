@@ -6,6 +6,9 @@ import notificationService from '../services/notificationService';
 import audioService from '../services/audioService';
 import analyticsService from '../services/analyticsService';
 import authService from '../services/authService';
+import { FaHome, FaUser, FaCode, FaBriefcase, FaTools, FaBars, FaTimes } from 'react-icons/fa';
+
+
 
 export default function NavbarSecured() {
   const navigate = useNavigate();
@@ -165,37 +168,39 @@ export default function NavbarSecured() {
 
   // Navigation items
   // Structure professionnelle avec sous-menus
-  const navGroups = [
-    {
-      items: [
-        { href: '/', label: 'Accueil'},
-      ],
-    },
-    {
-      items: [
-        { href: '/about', label: 'À propos'},
-      ],
-    },
 
-    {
-      items: [
-        { href: '/services', label: 'Services' },
-      ],
-    },
+const navGroups = [
+  {
+    items: [
+      { href: '/', label: 'Accueil', icon: <FaHome /> },
+    ],
+  },
 
-     {
-      items: [
-        { href: '/skills', label: 'Compétences'},
-      ],
-    },
+  {
+    items: [
+      { href: '/about', label: 'À propos', icon: <FaUser /> },
+    ],
+  },
 
-     {
-      items: [
-        { href: '/experience', label: 'Expérience' },
-      ],
-    },
+  {
+    items: [
+      { href: '/skills', label: 'Compétences', icon: <FaCode /> },
+    ],
+  },
+  {
+    items: [
+      { href: '/experience', label: 'Expérience', icon: <FaBriefcase /> },
+    ],
+  },
+  {
+    items: [
+      { href: '/services', label: 'Services', icon: <FaTools /> },
+    ],
+  },
+];
 
-  ];
+
+
 
   return (
     <>
@@ -229,7 +234,7 @@ export default function NavbarSecured() {
               {navGroups.map((group) => (
                 <div key={group.label} className="relative group">
                   <button
-                    className="text-black-500 hover:text-from-red-500 to-red-300 to-red-200 font-blue-400 transition-colors"
+                    className="text-from-red-700 to-red-700 to-red-500  hover:text-from-white font-blue-400 transition-colors"
                     style={{
                       cursor: group.items?.length > 1 ? 'pointer' : 'default',
                     }}
@@ -243,7 +248,7 @@ export default function NavbarSecured() {
                           key={item.href}
                           href={item.href}
                           onClick={(e) => handleNavClick(item.href, e)}
-                          className="flex items-center gap-2 px-5 py-3 text-black-500 hover:text-red-500 hover:bg-purple/20 text-base rounded-xl transition-all duration-200 font-medium group-hover:scale-105"
+                          className="flex items-center gap-2 px-5 py-3 text-from-red-700 to-red-500 to-red-300 hover:text-red-500 hover:bg-purple/20 text-base rounded-xl transition-all duration-200 font-medium group-hover:scale-105"
                         >
                           <span className="text-lg">{item.icon}</span> {item.label}
                         </a>
@@ -435,7 +440,7 @@ export default function NavbarSecured() {
   {/* Bouton de changement de thème */}
   <button
     onClick={toggleTheme}
-    className="p-2 rounded-lg bg-red-100 dark:bg-gray-400 text-black dark:text-white transition-colors"
+    className="p-2 rounded-lg bg-red-700 dark:bg-gray-400 text-black dark:text-white transition-colors"
   >
     {theme === 'dark' ? '☀️' : '🌙'}
   </button>
@@ -482,70 +487,80 @@ export default function NavbarSecured() {
           </div>
         </div>
         </div>
+   
         {/* Mobile menu avec sous-menus professionnels */}
-        {isOpen && (
-          <div className="mi:hidden bg-gradient-to-br mb-3 text-black-400 via-purple-300 to-red-500/30 backdrop-red border-t border-gray-400/40 text-hover-red-700 to-red-500 to-red-300 rounded-b-xl shadow-lg z-40 transition-all duration-300"
-          style={{
-            fontFamily: "'Saira', serif", 
-            fontWeight: 900,
-            fontStyle: "normal",
-          }}
-          >
-            <div className="px-2 pt-2 pb-3 space-y-2">
-              {navGroups.map((group) => (
-                <div key={group.label} className="mb-2">
-                  <div className="font-bold text-from-red-500 to-red-300 to-red-200 text-base mb-2 pl-2">{group.label}</div>
-                  {group.items.map((item) => (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={(e) => handleNavClick(item.href, e)}
-                      className="flex items-center gap-2 px-4 py-3 text-black-500 hover:text-from-red-500 to-red-300 to-red-200 hover:bg-purple/40 text-base rounded-xl transition-all duration-200 font-medium"
-                    >
-                      <span className="text-lg">{item.icon}</span> {item.label}
-                    </a>
-                  ))}
-                </div>
-              ))}
-              <div className="border-t border-gray-700/30 pt-2 mt-2">
-                {isAuthenticated ? (
-                  <>
-                    <button
-                      onClick={handleDashboard}
-                      className="w-full text-left px-4 py-3 text-purple hover:bg-dark-300 rounded-xl text-base font-semibold transition-colors flex items-center gap-2"
-                    >
-                      <FaTachometerAlt className="h-4 w-4" />
-                      Dashboard
-                    </button>
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-3 text-red-400 hover:bg-dark-300 rounded-xl text-base font-semibold transition-colors flex items-center gap-2"
-                    >
-                      <FaSignOutAlt className="h-4 w-4" />
-                      Déconnexion
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      onClick={handleLogin}
-                      className="w-full text-left px-4 py-3 text-black-500 hover:text-white hover:bg-dark-300 rounded-xl text-base transition-colors flex items-center gap-2"
-                    >
-                      <FaSignInAlt className="h-4 w-4" />
-                      Connexion
-                    </button>
-                    <button
-                      onClick={handleRegister}
-                      className="w-full text-left px-4 py-3 text-red-700 to-red-500 to-red-300 hover:bg-red-500 rounded-xl text-gray-400 transition-colors"
-                    >
-                      S'inscrire
-                    </button>
-                  </>
-                )}
-              </div>
+{isOpen && (
+  <div 
+    className="md:hidden fixed inset-x-0 top-16 bg-white dark:bg-black border-t border-red-500 shadow-2xl z-50 rounded-b-2xl transition-all duration-300"
+    style={{ fontFamily: "'Saira', sans-serif" }}
+  >
+    <div className="px-4 pt-4 pb-6 space-y-3">
+      {navGroups.map((group, idx) => (
+        <div key={idx} className="mb-4">
+          {/* Label du groupe (ex: Navigation) */}
+          {group.label && (
+            <div className="text-xs font-bold uppercase tracking-widest text-red-500 mb-2 pl-2">
+              {group.label}
             </div>
+          )}
+          
+          {group.items.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={(e) => handleNavClick(item.href, e)}
+              className="flex items-center gap-4 px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all duration-200"
+            >
+              {/* C'est ici que l'icône s'affiche */}
+              <span className="text-xl text-red-600 dark:text-red-400">
+                {item.icon}
+              </span>
+              <span className="text-lg font-semibold">{item.label}</span>
+            </a>
+          ))}
+        </div>
+      ))}
+
+      {/* Section Authentification / Actions */}
+      <div className="border-t border-gray-200 dark:border-gray-800 pt-4 mt-2">
+        {isAuthenticated ? (
+          <div className="grid grid-cols-1 gap-2">
+            <button
+              onClick={handleDashboard}
+              className="flex items-center gap-3 px-4 py-3 text-purple-600 dark:text-purple-400 font-bold bg-purple-50 dark:bg-purple-900/10 rounded-xl"
+            >
+              <FaTachometerAlt className="text-xl" />
+              Tableau de bord
+            </button>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-4 py-3 text-red-600 font-bold bg-red-50 dark:bg-red-900/10 rounded-xl"
+            >
+              <FaSignOutAlt className="text-xl" />
+              Déconnexion
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={handleLogin}
+              className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 rounded-xl font-bold"
+            >
+              <FaSignInAlt /> Connexion
+            </button>
+            <button
+              onClick={handleRegister}
+              className="px-4 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-colors"
+            >
+              S'inscrire
+            </button>
           </div>
         )}
+      </div>
+    </div>
+  </div>
+)}
+
       </nav>
     </>
   );

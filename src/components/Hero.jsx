@@ -141,7 +141,7 @@ export default function Hero() {
             </motion.h2>
 
             <motion.p
-              className="text-lg md:text-2xl text-gray-400 mb-5 font-medium"
+              className="text-lg md:text-2xl text-red-700 to-red-500 to-red-300 mb-5 font-medium"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}
@@ -184,14 +184,14 @@ export default function Hero() {
             <motion.button
               type="button"
               onClick={() => navigate('/contact')}
-              className="group relative px-8 py-3 bg-gradient-to-r from-purple to-pink text-white rounded-lg overflow-hidden"
+              className="group relative px-8 py-3 bg-gradient-to-r from-red-700 to-red-500 to-red-300 to-pink text-white rounded-lg overflow-hidden"
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 },
               }}
               whileHover={{
                 scale: 1.05,
-                boxShadow: '0 20px 40px rgba(139, 92, 246, 0.3)',
+                boxShadow: '0 20px 40px rgba(251, 251, 252, 0.2)',
               }}
               whileTap={{ scale: 0.98 }}
             >
@@ -214,11 +214,11 @@ export default function Hero() {
               }}
               whileHover={{
                 scale: 1.05,
-                boxShadow: '0 20px 40px rgba(139, 92, 246, 0.2)',
+                boxShadow: '0 20px 40px rgba(255, 17, 17, 0.93)',
               }}
               whileTap={{ scale: 0.98 }}
             >
-              <span className="relative z-10 font-semibold">Mes Projets</span>
+              <span className="relative z-10 font-semibold">Projets</span>
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600"
                 initial={{ scale: 0 }}

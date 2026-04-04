@@ -50,7 +50,7 @@ export default function Skills() {
   return (
     <motion.section
       id="skills"
-      className="py-20 px-4 bg-black border-0"
+      className="py-20 px-4 bg-white dark:bg-black border-0 transition-colors duration-300"
       style={{
         fontFamily: 'Saira, Arial, Helvetica, sans-serif',
         zIndex: 1000,
@@ -62,20 +62,20 @@ export default function Skills() {
     >
       <div className="container mx-auto">
         <motion.h1
-          className="text-4xl md:text-4xl font-extrabold text-center mt-5 bg-gradient-to-r from-red-500 to-red-300 to-red-200 text-transparent bg-clip-text"
+          className="text-4xl md:text-4xl font-extrabold text-center mt-5 bg-gradient-to-r from-red-500 to-red-300 to-red-200"
           variants={itemVariants}
         >
           Compétences
         </motion.h1>
         <motion.p
-          className="text-lg text-center text-gray-400 mb-10"
+          className="text-lg text-gray-400 font-medium max-w-2xl mx-auto mb-6 text-center"
           variants={itemVariants}
         >
           Compétences techniques et humaines pour des projets réussis.
         </motion.p>
       </div>
       <motion.h2
-        className="text-3xl md:text-4xl font-bold text-center mb-4"
+        className="text-4xl md:text-3xl font-bold text-center mb-4"
         variants={itemVariants}
       >
         <span className="bg-gradient-to-r from-red-500 to-red-300 to-red-200 text-transparent bg-clip-text">
@@ -83,7 +83,7 @@ export default function Skills() {
         </span>
       </motion.h2>
       <motion.p
-        className="text-lg text-center text-gray-400 mb-10"
+        className="text-lg text-gray-400 font-medium max-w-2xl mx-auto mb-6 text-center"
         variants={itemVariants}
       >
         Soft-Skills, Système & Réseau, Communication, Sécurité

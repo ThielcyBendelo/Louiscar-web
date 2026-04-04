@@ -344,6 +344,10 @@ body {
     background-color: #e2e8f0 !important;
   }
 
+  [data-theme='dark'] #skills {
+  background-color: #000000 !important;
+}
+
   [data-theme='light'] .hover\:bg-dark-500:hover {
     background-color: #cbd5e1 !important;
   }
