@@ -16,14 +16,7 @@ export default function NavbarSecured() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [theme, setTheme] = useState(() => {
-    try {
-      const stored = localStorage.getItem('theme');
-      if (stored) return stored;
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-    } catch { }
-    return 'light';
-  });
+  
 
   useEffect(() => {
     authService.initialize().then(() => {
@@ -42,12 +35,7 @@ export default function NavbarSecured() {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    try {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-    } catch { }
-  }, [theme]);
+
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
