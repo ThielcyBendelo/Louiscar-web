@@ -1,143 +1,117 @@
-import { skills } from '../assets/assets.js';
-import {
-  FaReact,
-  FaHtml5,
-  FaCss3Alt,
-  FaNodeJs,
-  FaGitAlt,
-} from 'react-icons/fa';
-import { SiJavascript } from 'react-icons/si';
-import { MdDevices } from 'react-icons/md';
-// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
+import { 
+  FaReact, FaGitAlt, FaShieldAlt, FaProjectDiagram, 
+  FaBullhorn, FaServer, FaHandshake, FaMicrophoneAlt, FaAward
+} from 'react-icons/fa';
+import { SiJavascript, SiLinux } from 'react-icons/si';
+import { MdCrisisAlert } from 'react-icons/md';
 
-// Map skill label -> icon component
-const skillIcons = {
-  JavaScript: SiJavascript,
-  React: FaReact,
-  HTML: FaHtml5,
-  CSS: FaCss3Alt,
-  'Node.js': FaNodeJs,
-  Git: FaGitAlt,
-  'Responsive Design': MdDevices,
-};
+const skillCategories = [
+  {
+    title: "Relations Publiques & Stratégie",
+    color: "from-red-600 to-red-900",
+    skills: [
+      { name: "Communication de Crise", icon: MdCrisisAlert, level: "Expert" },
+      { name: "Négociation B2B", icon: FaHandshake, level: "Senior" },
+      { name: "Stratégie de Marque", icon: FaBullhorn, level: "Expert" },
+      { name: "Vulgarisation Tech", icon: FaMicrophoneAlt, level: "Avancé" },
+    ]
+  },
+];
 
 export default function Skills() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: 'easeOut',
-      },
-    },
-  };
-
   return (
-    <motion.section
-      id="skills"
-      className="py-20 px-4 bg-white dark:bg-black border-0 transition-colors duration-300"
-      style={{
-        fontFamily: 'Saira, Arial, Helvetica, sans-serif',
-        zIndex: 1000,
-      }}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={containerVariants}
-    >
-      <div className="container mx-auto">
-        <motion.h1
-          className="text-4xl md:text-4xl font-extrabold text-center mt-5 bg-gradient-to-r from-red-500 to-red-300 to-red-200"
-          variants={itemVariants}
+    <section id="skills" className="py-24 px-6 bg-[#050505] relative overflow-hidden">
+      {/* Effet de lumière en arrière-plan */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-600/10 blur-[120px] rounded-full pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
+          <div className="max-w-2xl">
+            <motion.h2 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="text-red-600 font-bold tracking-[0.2em] uppercase text-sm mb-4"
+            >
+              Expertise & Hard Skills
+            </motion.h2>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-5xl md:text-7xl font-black text-white"
+            >
+              Compétences <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600 text-slate-500">Hybrides.</span>
+            </motion.h1>
+          </div>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-slate-400 text-lg md:text-right max-w-sm italic border-l-2 border-red-600 pl-4 md:border-l-0 md:border-r-2 md:pr-4"
+          >
+            "La technologie n'est rien sans une communication maîtrisée."
+          </motion.p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {skillCategories.map((category, catIdx) => (
+            <motion.div 
+              key={catIdx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: catIdx * 0.2 }}
+              className="space-y-6"
+            >
+              <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+                <span className={`w-8 h-[2px] bg-gradient-to-r ${category.color}`} />
+                {category.title}
+              </h3>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {category.skills.map((skill, idx) => (
+                  <motion.div
+                    key={idx}
+                    whileHover={{ scale: 1.02 }}
+                    className="p-6 rounded-3xl bg-gradient-to-br from-slate-900/40 to-slate-900/10 border border-slate-800/50 hover:border-red-600/40 transition-all relative group overflow-hidden"
+                  >
+                    {/* Décoration subtile en arrière-plan */}
+                    <div className="absolute -right-4 -bottom-4 text-6xl text-white/[0.02] group-hover:text-red-600/[0.05] transition-colors">
+                      <skill.icon />
+                    </div>
+
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="p-3 rounded-2xl bg-slate-800/50 text-red-500 group-hover:bg-red-600 group-hover:text-white transition-all">
+                        <skill.icon className="text-xl" />
+                      </div>
+                      <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-tighter text-slate-500 bg-slate-800/30 px-2 py-1 rounded-full">
+                        <FaAward className="text-red-600" /> {skill.level}
+                      </div>
+                    </div>
+                    
+                    <h4 className="text-white font-bold text-lg">{skill.name}</h4>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Section Développement Rapide (Vite) */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="mt-16 p-8 rounded-[2rem] bg-gradient-to-r from-red-600/10 to-transparent border border-red-600/20 flex flex-col md:flex-row items-center justify-between gap-8"
         >
-          Compétences
-        </motion.h1>
-        <motion.p
-          className="text-lg text-gray-400 font-medium max-w-2xl mx-auto mb-6 text-center"
-          variants={itemVariants}
-        >
-          Compétences techniques et humaines pour des projets réussis.
-        </motion.p>
-      </div>
-      <motion.h2
-        className="text-4xl md:text-3xl font-bold text-center mb-4"
-        variants={itemVariants}
-      >
-        <span className="bg-gradient-to-r from-red-500 to-red-300 to-red-200 text-transparent bg-clip-text">
-      Négociation, communication de crise, vulgarisation technique, gestion de projet.
-        </span>
-      </motion.h2>
-      <motion.p
-        className="text-lg text-gray-400 font-medium max-w-2xl mx-auto mb-6 text-center"
-        variants={itemVariants}
-      >
-        Soft-Skills, Système & Réseau, Communication, Sécurité
-      </motion.p>
-        <motion.div
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-6"
-          variants={containerVariants}
-        >
-          {skills.map((skill, idx) => {
-            const Icon = skillIcons[skill];
-            return (
-              <motion.div
-                key={idx}
-                className="group card-base card-interactive card-hover-scale p-4 sm:p-5 text-center select-none"
-                variants={itemVariants}
-                whileHover={{
-                  scale: 1.05,
-                  y: -5,
-                  transition: { duration: 0.2 },
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <div
-                  className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-dark-200
-                                ring-1 ring-white/5 group-hover:ring-[var(--accent-1)]/40 transition-all shadow-inner"
-                >
-                  {Icon ? (
-                    <Icon className="h-6 w-6 text-gray-200 group-hover:drop-shadow-glow" />
-                  ) : (
-                    <span className="text-gray-300 text-lg">{skill[0]}</span>
-                  )}
-                </div>
-                <span className="text-gray-200 font-medium tracking-wide">
-                  {skill}
-                </span>
-              </motion.div>
-            );
-          })}
+          <div>
+            <h4 className="text-white font-bold text-xl mb-2">Stack de Développement Moderne</h4>
+            <p className="text-slate-400 text-sm">React, Vite, Node.js, et architectures Cloud sécurisées.</p>
+          </div>
+          <div className="flex gap-6 text-3xl text-slate-500">
+            <FaReact className="hover:text-cyan-400 transition-colors cursor-help" title="React Expertise" />
+            <SiJavascript className="hover:text-yellow-400 transition-colors cursor-help" title="JS Master" />
+            <FaGitAlt className="hover:text-orange-600 transition-colors cursor-help" title="Version Control" />
+          </div>
         </motion.div>
-    </motion.section>
-  );
-}
-
-export function SkillsSection() {
-  return (
-    <motion.section
-      id="skills"
-      className="py-20 px-4 bg-black border-0"
-      style={{
-        fontFamily: 'Saira, Arial, Helvetica, sans-serif',
-        zIndex: 1000,
-      }}
-    >
-    <Skills />
-    </motion.section>
+      </div>
+    </section>
   );
 }

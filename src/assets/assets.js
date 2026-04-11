@@ -35,10 +35,7 @@ export const skills = [
   'Réseaux sociaux professionnels (LinkedIn)',
   'Organisation d/événements IT.',
 
-  // Sécurité
-  'Audits de sécurité système', 
-  'Gestion des sauvegardes',
-  'Protocoles de protection des données (RGPD)', 
+  
 ];
 
 export const experiences = [
@@ -68,41 +65,6 @@ export const experiences = [
     description:
       " Anticiper les risques de réputation liés à des bugs ou des cyberattaques et mettre en place des plans de communication de crise. ",
   },
-
-  {
-    role: 'Support & Infrastructure',
-    company: 'Mwamokel Agency',
-    year: '2025-Présent',
-    type: 'Entretien du parc informatique',
-    description:
-      "Installer, configurer et mettre à jour le matériel (serveurs, PC) et les licences logicielles nécessaires au développement.",
-  },
-  {
-    role: 'Support & Infrastructure',
-    company: 'Mwamokel Agency',
-    year: '2023-Présent',
-    type: 'Sécurité et Sauvegarde',
-    description:
-      'Mettre en place des solutions de cybersécurité, gérer les VPN, les certificats SSL et assurer la pérennité des données par des sauvegardes régulières.',
-  },
-  {
-    role: 'Support & Infrastructure',
-    company: 'Mwamokel Agency',
-    year: '2025-Présent',
-    type: 'Support technique (Helpdesk)',
-    description:
-      "Diagnostiquer et réparer les pannes réseaux ou hardware pour minimiser les interruptions de service.",
-  },
-
- {
-    role: 'Support & Infrastructure',
-    company: 'Mwamokel Agency',
-    year: '2025-Présent',
-    type: 'Gestion des accès Cloud :',
-    description:
-      "Administrer les services Cloud (Office 365, AWS, Azure) pour garantir l'accessibilité des projets n'importe où.",
-  },
-
 ];
 
 export const projets = [

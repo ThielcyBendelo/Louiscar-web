@@ -1,12 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  FaGithub,
-  FaLinkedin,
-  FaEnvelope,
-  FaInstagram,
-  FaFacebook,
-  FaWhatsapp,
+  FaGithub, FaLinkedin, FaEnvelope,
+  FaInstagram, FaFacebook, FaWhatsapp
 } from 'react-icons/fa';
 import { contact } from '../assets/assets.js';
 
@@ -22,76 +18,53 @@ export default function Footer() {
     WhatsApp: FaWhatsapp,
   };
 
-
   return (
-    <footer className="bg-dark-200 text-gray-300 py-8 mt-auto border-t border-gray-700">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Logo et Description */}
-          <div className="text-center md:text-left">
-            <h3 className="text-2xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-purple to-pink text-transparent bg-clip-text">
-                Mon Portfolio
-              </span>
+    <footer className="bg-slate-950 text-slate-400 py-12 border-t border-slate-900">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          
+          {/* Identité de Marque */}
+          <div className="col-span-1 md:col-span-2 space-y-4">
+            <h3 className="text-2xl font-black text-white">
+              LOUISCAR<span className="text-red-600">.</span>
             </h3>
-            <p className="text-sm text-gray-400">
-              Créons ensemble des expériences web exceptionnelles
+            <p className="text-slate-500 max-w-sm leading-relaxed">
+              Expert en Relations Publiques & Maintenance Systèmes. 
+              Partenaire stratégique chez MUAMOKEL Agency pour vos ambitions numériques.
             </p>
           </div>
 
-          {/* Liens rapides */}
-          <div className="text-center">
-            <h4 className="text-lg font-semibold mb-4">Liens Rapides</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/home">Accueil</Link>
-              </li>
-              <li>
-            <li>
-              <Link to="/about">À propos de moi</Link> 
-            </li>
-              </li>
-              <li>
-               <Link to="/skills">Compétences</Link>
-              </li>
-              <li>
-                <Link to="/contact">Contact</Link>
-              </li>
-              <li>
-                <Link to="/experience">Expériences</Link>
-              </li>
-              <li>
-                <Link to="/projects">Projets</Link>
-              </li>
-              <li>
-                <Link to="/services">Services</Link>
-              </li>
+          {/* Navigation - Correction de l'erreur <li> */}
+          <div>
+            <h4 className="text-white font-bold mb-6 uppercase tracking-widest text-xs">Navigation</h4>
+            <ul className="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
+              <li><Link to="/" className="hover:text-red-500 transition-colors">Accueil</Link></li>
+              <li><Link to="/about" className="hover:text-red-500 transition-colors">À propos</Link></li>
+              <li><Link to="/skills" className="hover:text-red-500 transition-colors">Compétences</Link></li>
+              <li><Link to="/projects" className="hover:text-red-500 transition-colors">Projets</Link></li>
+              <li><Link to="/services" className="hover:text-red-500 transition-colors">Services</Link></li>
+              <li><Link to="/contact" className="hover:text-red-500 transition-colors">Contact</Link></li>
             </ul>
           </div>
 
-          {/* Réseaux sociaux */}
-          <div className="text-center md:text-right">
-            <h4 className="text-lg font-semibold mb-4">Me Suivre</h4>
-            <div className="flex justify-center md:justify-end space-x-4">
+          {/* Social & Contact */}
+          <div className="md:text-right">
+            <h4 className="text-white font-bold mb-6 uppercase tracking-widest text-xs">Réseaux</h4>
+            <div className="flex justify-start md:justify-end gap-5">
               {contact.map((item) => {
                 const Icon = socialIcons[item.label];
                 if (!Icon) return null;
-                // If the contact link is an email address (no protocol), convert to mailto
-                let href = item.link;
-                if (item.label === 'Email' && !/^mailto:/i.test(href)) {
-                  href = `mailto:${href}`;
-                }
+                let href = item.label === 'Email' && !/^mailto:/i.test(item.link) 
+                  ? `mailto:${item.link}` 
+                  : item.link;
+                
                 return (
                   <a
                     key={item.label}
                     href={href}
-                    target={href.startsWith('mailto:') ? undefined : '_blank'}
-                    rel={
-                      href.startsWith('mailto:')
-                        ? undefined
-                        : 'noopener noreferrer'
-                    }
-                    className="text-2xl hover:text-purple transition-colors hover:scale-110 transform duration-200"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xl text-slate-400 hover:text-red-600 transition-all transform hover:-translate-y-1"
                     aria-label={item.label}
                   >
                     <Icon />
@@ -102,9 +75,13 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Copyright uniquement */}
-        <div className="mt-auto pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
-          <p>© {currentYear} Louiscar Ingeba | CRP . Tous droits réservés.</p>
+        {/* Copyright & Légal */}
+        <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium uppercase tracking-tighter">
+          <p>© {currentYear} Louiscar Ingeba. MUAMOKEL Agency.</p>
+          <div className="flex gap-6 text-slate-600">
+            <span className="hover:text-white cursor-pointer">Mentions Légales</span>
+            <span className="hover:text-white cursor-pointer">Confidentialité</span>
+          </div>
         </div>
       </div>
     </footer>
