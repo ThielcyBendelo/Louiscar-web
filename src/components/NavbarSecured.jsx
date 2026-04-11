@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GiEagleEmblem, GiLoveInjection } from 'react-icons/gi';
-import { FaSignInAlt, FaSignOutAlt, FaTachometerAlt } from 'react-icons/fa';
+import { FaSignInAlt, FaSignOutAlt, FaTachometerAlt, FaHome, FaUser, FaCode, FaBriefcase, FaTools, FaBars, FaTimes } from 'react-icons/fa';
+// AJOUT DE L'IMPORT MANQUANT POUR ANIMATEPRESENCE
+import { motion, AnimatePresence } from 'framer-motion';
+
 import notificationService from '../services/notificationService';
 import audioService from '../services/audioService';
 import analyticsService from '../services/analyticsService';
 import authService from '../services/authService';
-import { FaHome, FaUser, FaCode, FaBriefcase, FaTools, FaBars, FaTimes } from 'react-icons/fa';
-
-
 
 export default function NavbarSecured() {
   const navigate = useNavigate();
@@ -21,35 +20,24 @@ export default function NavbarSecured() {
     try {
       const stored = localStorage.getItem('theme');
       if (stored) return stored;
-      if (
-        window.matchMedia &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches
-      )
-        return 'dark';
-    } catch {
-      // ignore errors (e.g., SSR or private mode)
-    }
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+    } catch { }
     return 'light';
   });
-  // Log après tous les hooks
-  console.log('[NavbarSecured] Render:', { isAuthenticated, currentUser });
+
   useEffect(() => {
-    // Initialiser la session automatiquement au chargement
     authService.initialize().then(() => {
       const loggedIn = authService.isLoggedIn();
       const user = authService.getCurrentUser();
       setIsAuthenticated(loggedIn);
       setCurrentUser(user);
-      console.log('[NavbarSecured] INIT:', { loggedIn, user });
     });
 
-    // Écouter les changements d'authentification
     const interval = setInterval(() => {
       const loggedIn = authService.isLoggedIn();
       const user = authService.getCurrentUser();
       setIsAuthenticated(loggedIn);
       setCurrentUser(user);
-      console.log('[NavbarSecured] INTERVAL:', { loggedIn, user });
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -58,262 +46,141 @@ export default function NavbarSecured() {
     try {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('theme', theme);
-    } catch {
-      // ignore write errors
-    }
+    } catch { }
   }, [theme]);
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    audioService.playClick();
-    analyticsService.trackEvent('theme_toggle', {
-      theme: newTheme,
-      category: 'user_interface',
-    });
-    notificationService.info(
-      `Mode ${newTheme === 'dark' ? 'sombre' : 'clair'} activé`,
-      { autoClose: 2000, icon: newTheme === 'dark' ? '🌙' : '☀️' }
-    );
-  };
-
-  const toggleAudio = async () => {
-    const newState = audioService.toggle();
-    setAudioEnabled(newState);
-
-    analyticsService.trackEvent('audio_toggle', {
-      enabled: newState,
-      category: 'user_preferences',
-    });
-
-    if (newState) {
-      audioService.playSuccess();
-      notificationService.success('🔊 Sons activés', { autoClose: 2000 });
-    } else {
-      notificationService.info('🔇 Sons désactivés', { autoClose: 2000 });
-    }
-  };
-
   const toggleMenu = () => {
-    const newState = !isOpen;
-    setIsOpen(newState);
+    setIsOpen(!isOpen);
     audioService.playClick();
-    analyticsService.trackEvent('mobile_menu_toggle', {
-      isOpen: newState,
-      category: 'navigation',
-    });
   };
 
-  const handleLogin = () => {
-    navigate('/login');
-    setIsOpen(false);
-    audioService.playNavigate();
-  };
-
-  const handleRegister = () => {
-    navigate('/register');
-    setIsOpen(false);
-    audioService.playNavigate();
-  };
-
+  const handleLogin = () => { navigate('/login'); setIsOpen(false); audioService.playNavigate(); };
   const handleDashboard = () => {
     if (isAuthenticated) {
       navigate('/dashboard');
       setIsOpen(false);
       audioService.playNavigate();
-      notificationService.info('Redirection vers votre tableau de bord...', {
-        autoClose: 2000,
-      });
     } else {
-      notificationService.warning(
-        '🔐 Veuillez vous connecter pour accéder au dashboard',
-        {
-          autoClose: 3000,
-        }
-      );
       navigate('/login');
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await authService.logout();
-      setIsAuthenticated(false);
-      setCurrentUser(null);
-      setShowUserMenu(false);
-      setIsOpen(false);
-      notificationService.success('✓ Déconnexion réussie', { autoClose: 2000 });
-      navigate('/');
-      audioService.playSuccess();
-    } catch {
-      notificationService.error('Erreur lors de la déconnexion', {
-        autoClose: 3000,
-      });
-    }
-  };
-
-  // ...existing code...
   const handleNavClick = (section, e) => {
     e.preventDefault();
     if (isOpen) setIsOpen(false);
     audioService.playNavigate();
-    analyticsService.trackEvent('navigation_click', {
-      section,
-      category: 'navigation',
-    });
-    if (section.startsWith('/')) {
-      navigate(section);
-    }
+    if (section.startsWith('/')) navigate(section);
   };
 
-  // Navigation items
-  // Structure professionnelle avec sous-menus
+  const navGroups = [
+    { items: [{ href: '/', label: 'Accueil', icon: <FaHome /> }] },
+    { items: [{ href: '/about', label: 'À propos', icon: <FaUser /> }] },
+    { items: [{ href: '/skills', label: 'Compétences', icon: <FaCode /> }] },
+    { items: [{ href: '/experience', label: 'Expérience', icon: <FaBriefcase /> }] },
+    { items: [{ href: '/services', label: 'Services', icon: <FaTools /> }] },
+  ];
 
-const navGroups = [
-  {
-    items: [
-      { href: '/', label: 'Accueil', icon: <FaHome /> },
-    ],
-  },
-
-  {
-    items: [
-      { href: '/about', label: 'À propos', icon: <FaUser /> },
-    ],
-  },
-
-  {
-    items: [
-      { href: '/skills', label: 'Compétences', icon: <FaCode /> },
-    ],
-  },
-  {
-    items: [
-      { href: '/experience', label: 'Expérience', icon: <FaBriefcase /> },
-    ],
-  },
-  {
-    items: [
-      { href: '/services', label: 'Services', icon: <FaTools /> },
-    ],
-  },
-];
-
-
-
-
-   // Problème : Trop de couleurs rouges différentes tuent la hiérarchie visuelle.
-// Solution : Utiliser une palette cohérente et un flou de verre (backdrop-blur) plus fin.
-
-return (
-  <nav className="fixed top-0 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-50 border-b border-gray-100 dark:border-slate-800 transition-all duration-300">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between h-16 items-center">
-        
-        {/* Logo : On simplifie pour le rendre plus "Corporate" */}
-        <div 
-          className="flex items-center gap-2 cursor-pointer group"
-          onClick={() => navigate('/')}
-        >
-          <span className="text-2xl font-extrabold bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent group-hover:from-red-500 group-hover:to-red-300 transition-all duration-300">
-            MON PORTFOLIO
-          </span>
-        </div>
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
-          {navGroups.map((group) => (
-            <div key={group.items[0].label} className="relative group">
-              <a
-                href={group.items[0].href}
-                onClick={(e) => handleNavClick(group.items[0].href, e)}
-                className="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-              >
-                {group.items[0].icon}
-                <span>{group.items[0].label}</span>
-              </a>
-            </div>
-          ))}
+  return (
+    <nav className="fixed top-0 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-50 border-b border-gray-100 dark:border-slate-800 transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16 items-center">
           
-          {/* Actions d'Authentification : Séparées visuellement */}
-          <div className="flex items-center gap-4 ml-4 border-l pl-6 border-gray-200 dark:border-slate-700">
-            {isAuthenticated ? (
-               <button onClick={handleDashboard} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 transition-all">
-                  <FaTachometerAlt className="text-slate-600 dark:text-slate-300" />
-               </button>
-            ) : (
-              <button 
-                onClick={handleLogin}
-                className="px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-lg hover:bg-red-700 shadow-md shadow-red-500/20 transition-all"
-              >
-                Connexion
-              </button>
-            )}
+          {/* Logo */}
+          <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigate('/')}>
+            <span className="text-2xl font-extrabold bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent group-hover:from-red-500 group-hover:to-red-300 transition-all duration-300">
+              MON PORTFOLIO
+            </span>
           </div>
-        </div>
 
-               {/* Mobile Toggle Button */}
-        <div className="md:hidden flex items-center">
-          <button 
-            onClick={toggleMenu} 
-            className="text-slate-600 dark:text-slate-600 text-2xl p-2"
-          >
-            {isOpen ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
-      </div>
-    </div>
-
-    {/* MENU MOBILE - La partie manquante */}
-    <div className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${isOpen ? 'visible' : 'invisible pointer-events-none'}`}>
-      
-      {/* Background Dimmer */}
-      <div 
-        className={`absolute inset-0 bg-slate-950/90 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`} 
-        onClick={() => setIsOpen(false)}
-      />
-
-      {/* Menu Content (Drawer) */}
-      <div className={`absolute right-0 top-0 h-full w-72 bg-white dark:bg-slate-900 shadow-2xl transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex flex-col h-full p-6 pt-20">
-          <div className="space-y-4">
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8">
             {navGroups.map((group) => (
-              <a
-                key={group.items[0].label}
-                href={group.items[0].href}
-                onClick={(e) => {
-                  handleNavClick(group.items[0].href, e);
-                  setIsOpen(false);
-                }}
-                className="flex items-center gap-4 p-4 text-lg font-semibold text-slate-700 dark:text-slate-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 rounded-2xl transition-all"
-              >
-                <span className="text-red-600">{group.items[0].icon}</span>
-                {group.items[0].label}
-              </a>
+              <div key={group.items[0].label} className="relative group">
+                <a
+                  href={group.items[0].href}
+                  onClick={(e) => handleNavClick(group.items[0].href, e)}
+                  className="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                >
+                  {group.items[0].icon}
+                  <span>{group.items[0].label}</span>
+                </a>
+              </div>
             ))}
+            
+            <div className="flex items-center gap-4 ml-4 border-l pl-6 border-gray-200 dark:border-slate-700">
+              {isAuthenticated ? (
+                <button onClick={handleDashboard} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 transition-all">
+                  <FaTachometerAlt className="text-slate-600 dark:text-slate-300" />
+                </button>
+              ) : (
+                <button onClick={handleLogin} className="px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-lg hover:bg-red-700 transition-all">
+                  Connexion
+                </button>
+              )}
+            </div>
           </div>
 
-          {/* Mobile Auth Actions
-          <div className="mt-auto pt-10 border-t border-gray-100 dark:border-slate-800">
-            {isAuthenticated ? (
-              <button 
-                onClick={handleDashboard}
-                className="w-full flex items-center justify-center gap-2 p-4 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white rounded-2xl font-bold"
-              >
-                <FaTachometerAlt /> Tableau de bord
-              </button>
-            ) : (
-              <button 
-                onClick={handleLogin}
-                className="w-full p-4 bg-red-600 text-white rounded-2xl font-bold shadow-lg shadow-red-600/20"
-              >
-                Se connecter
-              </button>
-            )}
-          </div> */}
+          {/* Mobile Toggle Button */}
+          <div className="md:hidden flex items-center">
+            <button onClick={toggleMenu} className="text-slate-600 dark:text-slate-300 text-2xl p-2">
+              {isOpen ? <FaTimes /> : <FaBars />}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
-);
+
+      {/* MENU MOBILE - Architecting Digital DNA Optimized */}
+      <AnimatePresence>
+        {isOpen && (
+          <div className="fixed inset-0 z-[100] md:hidden">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="absolute inset-0 bg-slate-950/60 backdrop-red-600 cursor-pointer"
+            />
+            <motion.div 
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="absolute right-0 top-0 h-full w-80 shadow-2xl border-l border-red/10"
+              style={{ background: 'radial-gradient(circle at top right, #300303, #020617)' }}
+            >
+              <div className="flex flex-col h-full p-8 pt-24 relative z-10">
+                <div className="space-y-4">
+                  {navGroups.map((group, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * index + 0.3 }}
+                    >
+                      <a
+                        href={group.items[0].href}
+                        onClick={(e) => handleNavClick(group.items[0].href, e)}
+                        className="group flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all"
+                      >
+                        <span className="text-xl text-blue-400">{group.items[0].icon}</span>
+                        <div className="flex flex-col">
+                          <span className="text-lg font-medium text-slate-200">{group.items[0].label}</span>
+                          <span className="text-[9px] uppercase tracking-widest text-slate-500">Access Point 0{index + 1}</span>
+                        </div>
+                      </a>
+                    </motion.div>
+                  ))}
+                </div>
+                <div className="mt-auto pt-10 border-t border-white/5 text-center">
+                  <p className="text-[9px] text-slate-500 tracking-[0.3em] uppercase">
+                    MUAMOKEL <span className="text-blue-400 font-bold">Agency</span>
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
 }

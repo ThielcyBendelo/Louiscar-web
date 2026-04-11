@@ -21,7 +21,7 @@ export default function About() {
     <>
       <motion.section
         id="about"
-        className="relative pb-24 pt-10 mt-5 bg-slate-950 overflow-hidden"
+        className="relative pt-15 pb-24  bg-slate-950 overflow-hidden flex flex-col"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}

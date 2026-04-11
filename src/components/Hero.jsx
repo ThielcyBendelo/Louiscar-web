@@ -61,6 +61,7 @@ export default function Hero() {
           <div className="absolute -inset-1 bg-red-600 rounded-full blur opacity-25"></div>
           <LazyImage
             src={profile1Image}
+            style={{ objectPosition: 'center 10%' }}
             className="relative w-40 h-40 md:w-52 md:h-52 rounded-full object-cover border-2 border-white/10 shadow-2xl"
           />
         </motion.div>
@@ -81,7 +82,7 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
           >
             Associé chez <span className="font-semibold text-white">MUAMOKEL Agency</span>. <br/>
-            Chargé de Relations Publiques & Maintenance Système.
+            Chargé de Relations Publiques & Associé.
           </motion.p>
         </div>
 
